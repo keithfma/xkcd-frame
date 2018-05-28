@@ -8,10 +8,6 @@ import random
 import flask
 import tkinter
 
-# constants - replace with cmdline parameters
-ROOT_PATH = '~/prj/xkcd-frame/xkcd_archive'
-INTERVAL = 60 # seconds
-
 # get screen size
 root = tkinter.Tk()
 screen_width = root.winfo_screenwidth()
@@ -47,4 +43,5 @@ def ui():
         image_alt=alt
         )
 
-app.run()
+# command line entry point
+run = app.run

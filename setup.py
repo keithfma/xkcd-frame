@@ -8,6 +8,11 @@ setup(
     install_requires=[
         'xkcd-dl',
         'flask',
-        ]
+        ],
+    entry_points={
+        'console_scripts': [
+            'xkcd-frame=xkcd_frame:run'
+            ]
+        }
     )
 
