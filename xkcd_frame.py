@@ -25,20 +25,25 @@ app = flask.Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def ui():
-    # select image file and read alt text
+    # select image file
     img = random.choice(img_files)
+    # read metadata
     with open(os.path.dirname(img) + '/description.txt', 'r') as fp:
         lines = fp.readlines()
     alt = ""
     for line in lines:
-        if line[:4] == 'alt:':
+        if line[:7] == 'title :':
+            ttl = line[7:].strip()
+        elif line[:15] == 'date-published:':
+            pub = line[15:].strip()
+        elif line[:4] == 'alt:':
             alt = line[4:].strip()
-            break
 
     return flask.render_template(
         'index.html',
+        title=f'{ttl} ({pub})',
         image_file=random.choice(img_files),
-        image_width=0.95*screen_width,
+        screen_width=0.95*screen_width,
         image_alt=alt
         )
 
