@@ -47,4 +47,4 @@ TBD
 
 ## Enable xkcd-frame on Boot
 
-TBD
+https://blog.gordonturner.com/2017/07/22/raspberry-pi-full-screen-browser-raspbian-july-2017/
