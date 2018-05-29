@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Display random XKCD comics
 """
@@ -8,7 +9,6 @@ import random
 import flask
 import tkinter
 import subprocess
-from pkg_resources import resource_filename
 
 # get screen size
 root = tkinter.Tk()
@@ -16,16 +16,11 @@ screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
 # find paths to all comic images, download with xkcd-dl if needed
-pattern = os.path.join('xkcd_archive', '[0-9]*/*.png')
-img_files = glob(pattern, recursive=True) 
-if not img_files:
-    subprocess.check_call(['xkcd-dl', '--update-db'])
-    subprocess.check_call(['xkcd-dl', '--download-all', '--path',
-                           resource_filename('xkcd_frame', '.')])
-    img_files = glob(pattern, recursive=True) 
+pattern = os.path.join('static', 'xkcd_archive', '[0-9]*/*.png')
+img_files = glob(pattern, recursive=True)
 
-# create UI app
-app = flask.Flask(__name__, static_folder='xkcd_archive')
+# create app
+app = flask.Flask('xkcd-frame')
 
 @app.route('/', methods=['GET'])
 def ui():
@@ -42,14 +37,15 @@ def ui():
             pub = line[15:].strip()
         elif line[:4] == 'alt:':
             alt = line[4:].strip()
-
+    # build page
     return flask.render_template(
-        'index.html',
+        'main.html',
         title='{} ({})'.format(ttl, pub),
-        image_file=random.choice(img_files),
+        image_file='/' + img,
         screen_width=0.95*screen_width,
         image_alt=alt
         )
 
-# command line entry point
-run = app.run
+if __name__ == '__main__':
+    app.run()
+
