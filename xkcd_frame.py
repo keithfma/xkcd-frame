@@ -7,17 +7,25 @@ from glob import glob
 import random
 import flask
 import tkinter
+import subprocess
+from pkg_resources import resource_filename
 
 # get screen size
 root = tkinter.Tk()
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-# find paths to all comic images, as downloaded by xkcd-dl
-img_files = glob(os.path.join('static', '[0-9]*/*.png'), recursive=True) 
+# find paths to all comic images, download with xkcd-dl if needed
+pattern = os.path.join('xkcd_archive', '[0-9]*/*.png')
+img_files = glob(pattern, recursive=True) 
+if not img_files:
+    subprocess.check_call(['xkcd-dl', '--update-db'])
+    subprocess.check_call(['xkcd-dl', '--download-all', '--path',
+                           resource_filename('xkcd_frame', '.')])
+    img_files = glob(pattern, recursive=True) 
 
 # create UI app
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_folder='xkcd_archive')
 
 @app.route('/', methods=['GET'])
 def ui():
