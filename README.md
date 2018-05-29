@@ -48,3 +48,5 @@ TBD
 ## Enable xkcd-frame on Boot
 
 https://blog.gordonturner.com/2017/07/22/raspberry-pi-full-screen-browser-raspbian-july-2017/
+
+midori -e Fullscreen -e Navigationbar -a http://localhost:5000

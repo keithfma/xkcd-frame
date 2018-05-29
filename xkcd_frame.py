@@ -45,7 +45,7 @@ def ui():
 
     return flask.render_template(
         'index.html',
-        title=f'{ttl} ({pub})',
+        title='{} ({})'.format(ttl, pub),
         image_file=random.choice(img_files),
         screen_width=0.95*screen_width,
         image_alt=alt
