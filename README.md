@@ -45,7 +45,12 @@ new and exciting problems to solve along the way.
 
 TBD
 
+You need to download the XKCD images with `xkcd-dl`. Navigate to the `static`
+folder, and run `xkcd-dl -a`.
+
 ## Enable xkcd-frame on Boot
 
 https://blog.gordonturner.com/2017/07/22/raspberry-pi-full-screen-browser-raspbian-july-2017/
 http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/gui/auto-run-browser-on-startup
+
+midori -e Fullscreen -e Navigationbar -a http://localhost:5000
